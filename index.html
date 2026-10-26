@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Paid Media Lab Guide</title>
+<meta name="description" content="An interactive guide to paid social media metrics. Learn how CPM, CTR, CPC, CVR, CPA, AOV and ROAS connect, run a pretend campaign, diagnose problems and plan a budget mix.">
+<meta name="author" content="James">
+<meta name="theme-color" content="#F3F5FA">
+<link rel="canonical" href="https://jameschrisa.github.io/paid-media-lab/">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-32x32.png" type="image/png" sizes="32x32">
+<link rel="icon" href="favicon-16x16.png" type="image/png" sizes="16x16">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Paid Media Lab Guide">
+<meta property="og:title" content="Paid Media Lab Guide">
+<meta property="og:description" content="Learn how ad metrics connect, from CPM to ROAS. Interactive simulator, diagnostics, industry benchmarks and quiz.">
+<meta property="og:url" content="https://jameschrisa.github.io/paid-media-lab/">
+<meta property="og:image" content="https://jameschrisa.github.io/paid-media-lab/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Paid Media Lab Guide: the metric chain from CPM to ROAS">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Paid Media Lab Guide">
+<meta name="twitter:description" content="Learn how ad metrics connect, from CPM to ROAS.">
+<meta name="twitter:image" content="https://jameschrisa.github.io/paid-media-lab/og-image.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F3F5FA; --surface:#FFFFFF; --surface-2:#EAEFFA; --ink:#101A33; --muted:#56607A; --line:#D9DFEB;
+  --blue:#2F5BFF; --blue-soft:#E3E9FF; --pink:#FF3D8B; --pink-soft:#FFE3EE;
+  --poor:#E5484D; --ok:#D99A0B; --great:#12A150;
+  --poor-soft:#FDE7E8; --ok-soft:#FCF1D6; --great-soft:#DDF4E6;
+  --display:"Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --body:"Atkinson Hyperlegible", "Segoe UI", system-ui, -apple-system, sans-serif;
+  color-scheme: light;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+:root[data-theme="dark"]{
+  --bg:#0D1324; --surface:#161F37; --surface-2:#1E2A4A; --ink:#EEF1F8; --muted:#A3ACC4; --line:#2B3657;
+  --blue:#6F8DFF; --blue-soft:#1F2B55; --pink:#FF6AA6; --pink-soft:#3A1C2D;
+  --poor:#FF6B70; --ok:#F2B53A; --great:#3CCB78;
+  --poor-soft:#3A1E24; --ok-soft:#382D14; --great-soft:#173326;
+  color-scheme: dark;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 76px);scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+h1,h2,h3{font-family:var(--display);line-height:1.1;margin:0;letter-spacing:-0.02em}
+h2{font-size:clamp(28px,4vw,40px);font-weight:800}
+h3{font-size:20px;font-weight:700}
+p{margin:0}
+button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px;border-radius:6px}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+
+/* nav */
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--surface) 92%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;align-items:center;gap:14px;height:62px}
+.brand{font-family:var(--display);font-weight:800;font-size:19px;display:flex;align-items:center;gap:8px;white-space:nowrap;text-decoration:none;color:var(--ink)}
+.brand-dot{width:22px;height:22px;border-radius:50%;background:conic-gradient(var(--blue) 0 70%,var(--pink) 70% 90%,var(--great) 90%)}
+.nav-links{display:flex;gap:4px;overflow-x:auto;flex:1;scrollbar-width:none}
+.nav-links::-webkit-scrollbar{display:none}
+.nav-links a{white-space:nowrap;text-decoration:none;color:var(--muted);font-size:15px;padding:7px 11px;border-radius:999px}
+.nav-links a:hover,.nav-links a.active{background:var(--blue-soft);color:var(--blue)}
+.theme-btn{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 12px;cursor:pointer;font-size:14px;white-space:nowrap}
+
+section{padding:72px 0;border-bottom:1px solid var(--line)}
+.sec-head{display:grid;grid-template-columns:auto 1fr;gap:6px 18px;align-items:baseline;margin-bottom:30px;max-width:760px}
+.step{font-family:var(--display);font-weight:800;font-size:15px;color:var(--blue);background:var(--blue-soft);border-radius:10px;padding:4px 10px;align-self:center}
+.sec-head p{grid-column:2;color:var(--muted);font-size:18px}
+
+/* hero */
+.hero{padding:56px 0 64px}
+.hero h1{font-size:clamp(32px,5vw,52px);font-weight:800;max-width:900px;letter-spacing:-0.035em}
+.hero-lede{font-size:20px;color:var(--muted);max-width:640px;margin-top:18px}
+.chain{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:40px}
+.pill{position:relative;border:2px solid var(--ink);background:var(--surface);border-radius:16px;padding:10px 16px 8px;cursor:pointer;text-align:left;min-width:92px;transition:transform .15s,background .15s}
+.pill:hover{transform:translateY(-2px)}
+.pill b{display:block;font-family:var(--display);font-size:24px;font-weight:800;line-height:1}
+.pill span{font-size:13px;color:var(--muted)}
+.pill.side{border-style:dashed}
+.pill[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.pill[aria-pressed="true"] span{color:inherit;opacity:.75}
+.arrow{width:26px;height:2px;background:var(--ink);position:relative;flex:none}
+.arrow::after{content:"";position:absolute;right:-1px;top:-4px;border-left:8px solid var(--ink);border-top:5px solid transparent;border-bottom:5px solid transparent}
+.arrow.flow{background:linear-gradient(90deg,var(--ink) 50%,transparent 50%);background-size:8px 2px;animation:dash .6s linear infinite}
+@keyframes dash{to{background-position:8px 0}}
+.layer-key{display:flex;gap:16px;flex-wrap:wrap;margin-top:14px;font-size:14px;color:var(--muted)}
+.layer-key i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:middle}
+.explain{margin-top:22px;background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:24px;display:grid;grid-template-columns:1.1fr 1fr;gap:24px;min-height:220px}
+.explain h3{font-size:30px}
+.explain .big{font-size:20px;margin-top:6px}
+.formula{display:inline-block;margin-top:14px;font-family:var(--display);font-weight:700;background:var(--surface-2);border-radius:10px;padding:8px 12px;font-size:16px}
+.explain dl{margin:0;display:grid;gap:12px}
+.explain dt{font-weight:700;font-size:14px;color:var(--blue)}
+.explain dd{margin:2px 0 0;font-size:16px}
+.fade-in{animation:fadeIn .35s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* flashcards */
+.group-title{font-family:var(--display);font-weight:700;font-size:18px;margin:26px 0 12px;display:flex;align-items:center;gap:10px}
+.group-title:first-child{margin-top:0}
+.group-title small{font-family:var(--body);font-weight:400;color:var(--muted);font-size:15px}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}
+.card{perspective:900px;height:210px;cursor:pointer;border:0;padding:0;background:none;text-align:left}
+.card-inner{position:relative;width:100%;height:100%;transition:transform .5s cubic-bezier(.2,.7,.2,1);transform-style:preserve-3d}
+.card.flipped .card-inner{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;border-radius:18px;padding:18px;backface-visibility:hidden;-webkit-backface-visibility:hidden;display:flex;flex-direction:column}
+.front{background:var(--surface);border:1px solid var(--line)}
+.front b{font-family:var(--display);font-size:44px;font-weight:800;line-height:1}
+.front .q{margin-top:auto;font-size:16px}
+.front .hint{font-size:13px;color:var(--muted);margin-top:6px}
+.back{background:var(--ink);color:var(--bg);transform:rotateY(180deg);font-size:15px;gap:8px}
+.back strong{font-family:var(--display);font-size:20px}
+.back code{font-family:var(--display);font-weight:700;background:color-mix(in srgb,var(--bg) 14%,transparent);padding:4px 8px;border-radius:8px;align-self:flex-start;font-size:14px}
+.back .ex{margin-top:auto;opacity:.8;font-size:14px}
+
+/* simulator */
+.sim{display:grid;grid-template-columns:330px 1fr;gap:22px;align-items:start}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:22px}
+.ctrl{margin-bottom:16px}
+.ctrl label{display:flex;justify-content:space-between;font-size:15px;font-weight:700}
+.ctrl label output{font-family:var(--display);font-size:17px;color:var(--blue)}
+.ctrl small{display:block;color:var(--muted);font-size:13px;margin-bottom:4px}
+input[type=range]{width:100%;accent-color:var(--blue);height:28px}
+.presets{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.chip{border:1px solid var(--line);background:var(--surface-2);border-radius:999px;padding:5px 11px;font-size:13px;cursor:pointer}
+.chip:hover{border-color:var(--blue)}
+.flow-box{position:relative;background:var(--surface-2);border-radius:18px;overflow:hidden}
+#flow{display:block;width:100%;height:220px}
+.flow-note{position:absolute;right:12px;bottom:8px;font-size:12px;color:var(--muted)}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px}
+.kpi{background:var(--surface-2);border-radius:14px;padding:12px}
+.kpi span{font-size:13px;color:var(--muted);display:block}
+.kpi b{font-family:var(--display);font-size:24px;font-weight:800;display:block;line-height:1.15}
+.kpi.hero-kpi{background:var(--ink);color:var(--bg)}
+.kpi.hero-kpi span{color:inherit;opacity:.7}
+.equation{margin-top:14px;font-size:15px;background:var(--blue-soft);border-radius:14px;padding:12px 14px;line-height:1.7}
+.equation b{font-family:var(--display)}
+.sub-h{font-family:var(--display);font-weight:700;font-size:18px;margin:22px 0 10px}
+.gauges{display:grid;gap:12px}
+.gauge{display:grid;grid-template-columns:120px 1fr 92px;gap:12px;align-items:center}
+.gauge .name{font-weight:700;font-size:15px}
+.gauge .name small{display:block;font-weight:400;color:var(--muted);font-size:12px}
+.track{position:relative;height:14px;border-radius:999px;display:flex;overflow:visible}
+.zone{height:100%}
+.zone:first-child{border-radius:999px 0 0 999px}
+.zone:last-child{border-radius:0 999px 999px 0}
+.z-poor{background:var(--poor-soft)}.z-ok{background:var(--ok-soft)}.z-great{background:var(--great-soft)}
+.marker{position:absolute;top:-6px;width:4px;height:26px;border-radius:3px;background:var(--ink);transform:translateX(-50%);transition:left .35s cubic-bezier(.2,.7,.2,1)}
+.be{position:absolute;top:-4px;height:22px;border-left:2px dashed var(--pink);transition:left .35s}
+.be::after{content:"break-even";position:absolute;top:22px;left:-30px;font-size:11px;color:var(--pink);white-space:nowrap}
+.badge{font-size:13px;font-weight:700;border-radius:999px;padding:4px 10px;text-align:center}
+.b-poor{background:var(--poor-soft);color:var(--poor)}.b-ok{background:var(--ok-soft);color:var(--ok)}.b-great{background:var(--great-soft);color:var(--great)}
+.diag{margin-top:14px;display:grid;gap:8px}
+.diag div{border-left:4px solid var(--blue);background:var(--surface-2);border-radius:0 12px 12px 0;padding:10px 14px;font-size:15px}
+.diag div.bad{border-color:var(--poor)}.diag div.good{border-color:var(--great)}
+.levers{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.lever{border:1px solid var(--line);background:var(--surface);border-radius:14px;padding:12px;cursor:pointer;text-align:left}
+.lever b{font-family:var(--display);font-size:17px;display:block}
+.lever span{font-size:13px;color:var(--muted)}
+.lever.on{border-color:var(--blue);background:var(--blue-soft)}
+.lever-out{margin-top:10px;font-size:15px;min-height:24px}
+
+/* diagnose */
+.patterns{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.pattern{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:22px;display:flex;flex-direction:column;gap:12px}
+.signals{display:flex;flex-wrap:wrap;gap:6px}
+.sig{font-size:13px;font-weight:700;border-radius:8px;padding:4px 9px}
+.sig.up{background:var(--great-soft);color:var(--great)}
+.sig.down{background:var(--poor-soft);color:var(--poor)}
+.sig.up.bad{background:var(--poor-soft);color:var(--poor)}
+.pattern p{font-size:16px}
+.pattern .fix{color:var(--muted);font-size:15px}
+.load{margin-top:auto;align-self:flex-start;border:0;background:var(--ink);color:var(--bg);border-radius:999px;padding:9px 16px;cursor:pointer;font-weight:700;font-size:14px}
+.load:hover{background:var(--blue);color:#fff}
+
+/* fit + industries */
+.fit{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-bottom:34px}
+.why3{display:grid;gap:10px}
+.why3 div{display:grid;grid-template-columns:38px 1fr;gap:12px;align-items:start}
+.why3 .ic{width:38px;height:38px;border-radius:12px;background:var(--blue-soft);display:grid;place-items:center;font-size:19px}
+.why3 b{display:block}
+.why3 span{font-size:15px;color:var(--muted)}
+.q-row{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--line);font-size:15px}
+.q-row:last-of-type{border-bottom:0}
+.yn{display:flex;border:1px solid var(--line);border-radius:999px;overflow:hidden;flex:none}
+.yn button{border:0;background:transparent;padding:5px 12px;cursor:pointer;font-size:14px}
+.yn button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.verdict{margin-top:14px;border-radius:14px;padding:14px;font-size:15px;background:var(--surface-2)}
+.verdict b{font-family:var(--display);font-size:19px;display:block;margin-bottom:2px}
+.meter{display:flex;gap:4px;margin-bottom:10px}
+.meter i{flex:1;height:8px;border-radius:4px;background:var(--line);transition:background .3s}
+.chart-tools{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:12px;align-items:center}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden;background:var(--surface)}
+.seg button{border:0;background:transparent;padding:6px 13px;cursor:pointer;font-size:14px}
+.seg button[aria-pressed="true"]{background:var(--blue);color:#fff}
+.chart{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:20px 20px 10px}
+.axis{display:grid;grid-template-columns:230px 1fr;font-size:12px;color:var(--muted);margin-bottom:4px}
+.axis div{position:relative;height:16px}
+#axisTicks span{position:absolute;transform:translateX(-50%)}
+#axisTicks span:first-child{transform:none}
+.row{display:grid;grid-template-columns:230px 1fr;gap:0;align-items:center;padding:9px 0;border-top:1px solid var(--line);cursor:pointer;background:none;border-left:0;border-right:0;border-bottom:0;width:100%;text-align:left}
+.row .lbl{font-weight:700;font-size:15px;padding-right:12px}
+.row .lbl small{display:inline-block;font-weight:700;font-size:11px;border-radius:6px;padding:2px 6px;margin-top:3px}
+.s-high{background:var(--great-soft);color:var(--great)}.s-mod{background:var(--ok-soft);color:var(--ok)}.s-low{background:var(--poor-soft);color:var(--poor)}
+.bar-track{position:relative;height:30px;background:repeating-linear-gradient(90deg,transparent 0 calc(14.2857% - 1px),var(--line) calc(14.2857% - 1px) 14.2857%)}
+.avg-band{position:absolute;top:0;bottom:0;background:color-mix(in srgb,var(--pink) 14%,transparent);border-left:1px dashed var(--pink);border-right:1px dashed var(--pink)}
+.range{position:absolute;top:6px;height:18px;border-radius:999px;background:var(--blue);width:0;transition:width .9s cubic-bezier(.2,.7,.2,1),left .4s;display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-weight:700;white-space:nowrap;overflow:visible}
+.range em{font-style:normal;position:absolute;left:calc(100% + 8px);color:var(--ink);font-size:13px}
+.reason{grid-column:1/-1;font-size:15px;color:var(--muted);padding:8px 0 4px;display:none}
+.row.open .reason{display:block}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:13px;color:var(--muted);margin-top:10px;padding-bottom:6px}
+.legend i{display:inline-block;width:14px;height:10px;border-radius:3px;vertical-align:middle;margin-right:5px}
+
+/* budget */
+.budget{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+select,.num{font:inherit;width:100%;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:12px;padding:10px 12px}
+.split-out{margin-top:16px;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.donut-wrap{display:grid;grid-template-columns:200px 1fr;gap:20px;align-items:center}
+.donut circle{fill:none;stroke-width:26;cursor:pointer;transition:stroke-width .2s}
+.donut circle.hl{stroke-width:34}
+.donut-info{font-size:15px}
+.donut-info b{font-family:var(--display);font-size:28px;display:block}
+.mix-list{display:grid;gap:8px;margin-top:12px}
+.mix-list button{display:grid;grid-template-columns:14px 52px 1fr auto;gap:10px;align-items:center;border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:9px 12px;cursor:pointer;text-align:left;font-size:14px}
+.mix-list button.on{border-color:var(--blue);background:var(--blue-soft)}
+.mix-list i{width:14px;height:14px;border-radius:4px}
+.mix-list strong{font-family:var(--display);font-size:17px}
+
+/* quiz */
+.quiz{max-width:720px}
+.qcard{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:26px}
+.qprog{display:flex;gap:6px;margin-bottom:18px}
+.qprog i{flex:1;height:6px;border-radius:3px;background:var(--line)}
+.qprog i.done{background:var(--blue)}
+.qcard h3{font-size:24px;margin-bottom:16px}
+.opts{display:grid;gap:8px}
+.opt{border:2px solid var(--line);background:var(--surface);border-radius:14px;padding:12px 14px;text-align:left;cursor:pointer;font-size:16px}
+.opt:hover:not(:disabled){border-color:var(--blue)}
+.opt.right{border-color:var(--great);background:var(--great-soft)}
+.opt.wrong{border-color:var(--poor);background:var(--poor-soft)}
+.qfeed{margin-top:14px;font-size:15px;min-height:22px}
+.next{margin-top:14px;border:0;background:var(--blue);color:#fff;border-radius:999px;padding:10px 18px;font-weight:700;cursor:pointer}
+footer{padding:36px 0 60px;color:var(--muted);font-size:14px}
+
+@media (max-width:900px){
+  .sim,.fit,.budget,.patterns,.explain{grid-template-columns:1fr}
+  .kpis{grid-template-columns:repeat(2,1fr)}
+  .levers{grid-template-columns:repeat(2,1fr)}
+  .axis,.row{grid-template-columns:140px 1fr}
+  .gauge{grid-template-columns:96px 1fr 84px}
+  .donut-wrap{grid-template-columns:1fr;justify-items:center}
+}
+@media (max-width:520px){
+  .arrow{width:12px}
+  .pill{min-width:0;padding:8px 11px 6px}
+  .pill b{font-size:20px}
+  .split-out{grid-template-columns:1fr}
+  .range em{display:none}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav" aria-label="Sections">
+  <div class="wrap">
+    <a class="brand" href="#top"><span class="brand-dot" aria-hidden="true"></span>Paid Media Lab Guide</a>
+    <div class="nav-links">
+      <a href="#chain">The chain</a>
+      <a href="#cards">Flashcards</a>
+      <a href="#sim">Simulator</a>
+      <a href="#diagnose">Diagnose</a>
+      <a href="#fit">Who should run ads</a>
+      <a href="#budget">Budget mix</a>
+      <a href="#quiz">Quiz</a>
+    </div>
+    <button class="theme-btn" id="themeBtn" aria-label="Switch color theme">Dark mode</button>
+  </div>
+</nav>
+
+<header class="hero wrap" id="top">
+  <h1>Paid Media Lab Guide</h1>
+  <p class="hero-lede">Paid social works like a chain. Each metric feeds the next, so a weak link anywhere shows up in your return. Tap a link to see what it measures and what it pushes on.</p>
+
+  <div id="chain">
+    <div class="chain" role="group" aria-label="Metric chain"></div>
+    <div class="layer-key">
+      <span><i style="background:var(--blue)"></i>Attention: will people stop and click?</span>
+      <span><i style="background:var(--ok)"></i>Conversion: will visitors buy?</span>
+      <span><i style="background:var(--pink)"></i>Bottom line: did it make money?</span>
+    </div>
+    <div class="explain" id="explain" aria-live="polite"></div>
+  </div>
+</header>
+
+<section id="cards">
+  <div class="wrap">
+    <div class="sec-head"><span class="step">1</span><h2>Learn the vocabulary</h2><p>Nine terms cover almost every ad report. Tap a card to flip it, then test yourself before you peek.</p></div>
+    <div id="cardGroups"></div>
+  </div>
+</section>
+
+<section id="sim">
+  <div class="wrap">
+    <div class="sec-head"><span class="step">2</span><h2>Run a pretend campaign</h2><p>Move the sliders and watch how one change ripples down the chain. Grades use common benchmarks for physical products.</p></div>
+    <div class="sim">
+      <div class="panel">
+        <div class="ctrl"><label for="s-budget">Ad spend <output id="o-budget"></output></label><small>What you put into the platform</small><input type="range" id="s-budget" min="500" max="50000" step="500" value="5000"></div>
+        <div class="ctrl"><label for="s-cpm">CPM <output id="o-cpm"></output></label><small>Price per 1,000 views</small><input type="range" id="s-cpm" min="3" max="120" step="0.5" value="15"></div>
+        <div class="ctrl"><label for="s-ctr">CTR <output id="o-ctr"></output></label><small>Share of viewers who click</small><input type="range" id="s-ctr" min="0.2" max="6" step="0.1" value="1.5"></div>
+        <div class="ctrl"><label for="s-cvr">CVR <output id="o-cvr"></output></label><small>Share of visitors who buy</small><input type="range" id="s-cvr" min="0.2" max="8" step="0.1" value="3"></div>
+        <div class="ctrl"><label for="s-aov">AOV <output id="o-aov"></output></label><small>Average order size</small><input type="range" id="s-aov" min="10" max="300" step="1" value="90"></div>
+        <div class="ctrl"><label for="s-margin">Gross margin <output id="o-margin"></output></label><small>What you keep after product and shipping costs</small><input type="range" id="s-margin" min="10" max="90" step="1" value="50"></div>
+        <div class="presets" aria-label="Load an example campaign">
+          <button class="chip" data-preset="base">Baseline</button>
+          <button class="chip" data-preset="winner">Winner</button>
+          <button class="chip" data-preset="leak">Traffic leak</button>
+          <button class="chip" data-preset="fatigue">Creative fatigue</button>
+          <button class="chip" data-preset="aov">AOV problem</button>
+        </div>
+      </div>
+
+      <div>
+        <div class="flow-box">
+          <canvas id="flow" aria-label="Animated flow of people from seeing the ad, to clicking, to buying"></canvas>
+          <span class="flow-note">Rates enlarged so you can see them</span>
+        </div>
+        <div class="kpis" id="kpis"></div>
+        <div class="equation" id="equation"></div>
+
+        <div class="sub-h">Report card</div>
+        <div class="gauges" id="gauges"></div>
+        <div class="diag" id="diag" aria-live="polite"></div>
+
+        <div class="sub-h">Which lever pays the most?</div>
+        <div class="levers" id="levers"></div>
+        <div class="lever-out" id="leverOut">Tap a lever to see what a 20% improvement does to ROAS.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="diagnose">
+  <div class="wrap">
+    <div class="sec-head"><span class="step">3</span><h2>Read the warning signs</h2><p>One metric rarely tells the story. Combinations point to the exact part of the chain that’s broken.</p></div>
+    <div class="patterns" id="patterns"></div>
+  </div>
+</section>
+
+<section id="fit">
+  <div class="wrap">
+    <div class="sec-head"><span class="step">4</span><h2>Who paid ads suit best</h2><p>Paid ads shine when buying is quick, tracking is clear, and the loop from ad to sale is short. Check your business, then compare industries.</p></div>
+    <div class="fit">
+      <div class="panel">
+        <h3 style="margin-bottom:14px">The three ingredients</h3>
+        <div class="why3">
+          <div><span class="ic" aria-hidden="true">⚡</span><p><b>Easy to buy</b><span>Someone sees an ad and checks out a $50 item in three clicks.</span></p></div>
+          <div><span class="ic" aria-hidden="true">🎯</span><p><b>Clear tracking</b><span>You can tie each sale back to the ad that caused it.</span></p></div>
+          <div><span class="ic" aria-hidden="true">🔁</span><p><b>Fast feedback</b><span>Results arrive in days, so you can test, learn and shift budget quickly.</span></p></div>
+        </div>
+        <p style="margin-top:16px;font-size:15px;color:var(--muted)">Enterprise B2B is the opposite: six-month cycles, committee approvals and big contracts. Broad paid ads there can burn money unless they’re built very carefully.</p>
+      </div>
+      <div class="panel">
+        <h3 style="margin-bottom:6px">Fit check for your business</h3>
+        <div id="fitQs"></div>
+        <div class="verdict" id="verdict"></div>
+      </div>
+    </div>
+
+    <div class="chart-tools">
+      <h3>Share of marketing budget spent on paid ads</h3>
+      <div class="seg" role="group" aria-label="Sort industries">
+        <button data-sort="fit" aria-pressed="true">Sort by fit</button>
+        <button data-sort="spend" aria-pressed="false">Sort by spend</button>
+      </div>
+    </div>
+    <div class="chart">
+      <div class="axis"><span></span><div id="axisTicks"></div></div>
+      <div id="rows"></div>
+      <div class="legend">
+        <span><i style="background:var(--blue)"></i>Typical paid share of total marketing budget</span>
+        <span><i style="background:color-mix(in srgb,var(--pink) 30%,transparent);border:1px dashed var(--pink)"></i>All-industry average: 30–35%</span>
+        <span>Tap a row for the reason</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="budget">
+  <div class="wrap">
+    <div class="sec-head"><span class="step">5</span><h2>Plan a healthy budget mix</h2><p>First decide how much of your marketing goes to paid ads. Then split that paid budget so most of it is safe and a little is spent learning.</p></div>
+    <div class="budget">
+      <div class="panel">
+        <div class="ctrl"><label for="b-total">Monthly marketing budget <output id="o-total"></output></label><input type="range" id="b-total" min="2000" max="500000" step="1000" value="50000"></div>
+        <div class="ctrl"><label for="b-type">Business type</label><select id="b-type"></select></div>
+        <div class="split-out" id="splitOut"></div>
+        <p id="restNote" style="margin-top:14px;font-size:15px;color:var(--muted)"></p>
+      </div>
+      <div class="panel">
+        <h3>The 70 / 20 / 10 rule for your paid budget</h3>
+        <div class="donut-wrap" style="margin-top:14px">
+          <svg class="donut" viewBox="0 0 200 200" width="200" height="200" role="img" aria-label="70 20 10 split chart" id="donut"></svg>
+          <div class="donut-info" id="donutInfo" aria-live="polite"></div>
+        </div>
+        <div class="mix-list" id="mixList"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="quiz">
+  <div class="wrap">
+    <div class="sec-head"><span class="step">6</span><h2>Check what stuck</h2><p>Seven quick questions. Every answer explains itself.</p></div>
+    <div class="quiz"><div class="qcard" id="qcard"></div></div>
+  </div>
+</section>
+
+<footer class="wrap">
+  <p>Benchmarks here are general rules of thumb. Real numbers vary by platform, industry, season, price point and audience. Use them to spot problems, then judge against your own margins.</p>
+</footer>
+
+<script>
+(function(){
+const $ = s => document.querySelector(s);
+const $$ = s => Array.from(document.querySelectorAll(s));
+const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const money = n => !isFinite(n) ? '–' : (Math.abs(n) >= 1000 ? (n<0?'-$':'$') + Math.round(Math.abs(n)).toLocaleString() : (n<0?'-$':'$') + Math.abs(n).toFixed(2));
+const num = n => !isFinite(n) ? '–' : Math.round(n).toLocaleString();
+const clamp = (v,a,b) => Math.max(a, Math.min(b, v));
+
+/* theme: default light */
+const themeBtn = $('#themeBtn');
+let theme = 'light';
+try { theme = localStorage.getItem('pml-theme') || 'light'; } catch(e) {}
+function applyTheme(){
+  document.documentElement.setAttribute('data-theme', theme);
+  themeBtn.textContent = theme === 'dark' ? 'Light mode' : 'Dark mode';
+  if (window.__redraw) window.__redraw();
+}
+themeBtn.addEventListener('click', () => { theme = theme === 'dark' ? 'light' : 'dark'; try{localStorage.setItem('pml-theme', theme);}catch(e){} applyTheme(); });
+applyTheme();
+
+/* ---------- 1. The chain ---------- */
+const stages = [
+ {k:'CPM', sub:'cost per 1,000 views', layer:'blue', name:'Cost per thousand impressions', simple:'The price of ad space.',
+  formula:'Spend ÷ Impressions × 1,000', moves:'How big and contested your audience is, the time of year (Q4 gets pricey), and how well the platform rates your ad.',
+  feeds:'Sets how many people you reach per dollar. A lower CPM buys more eyeballs for the same budget.'},
+ {k:'CTR', sub:'click-through rate', layer:'blue', name:'Click-through rate', simple:'How strong your hook is.',
+  formula:'Clicks ÷ Impressions × 100', moves:'The first few seconds of the video or image, the offer, and how well the audience matches.',
+  feeds:'A higher CTR spreads the same CPM across more clicks, so each click gets cheaper. Platforms also reward engaging ads with cheaper delivery.'},
+ {k:'CPC', sub:'cost per click', layer:'blue', name:'Cost per click', simple:'What one site visit costs.',
+  formula:'CPM ÷ (1,000 × CTR)', moves:'You don’t set it directly. It’s the result of CPM and CTR working together.',
+  feeds:'Every visitor costs this much before they buy anything. Baseline on most channels is about $1.00–$2.50.'},
+ {k:'CVR', sub:'conversion rate', layer:'ok', name:'Conversion rate', simple:'How well your page sells.',
+  formula:'Conversions ÷ Clicks × 100', moves:'How closely the page matches the ad, page speed, trust signals, and checkout friction.',
+  feeds:'Turns click cost into customer cost. Double the CVR and each customer costs half as much.'},
+ {k:'CPA', sub:'cost per acquisition', layer:'ok', name:'Cost per acquisition (also CAC)', simple:'The price tag on one sale or lead.',
+  formula:'Spend ÷ Conversions, or CPC ÷ CVR', moves:'Everything upstream: CPM, CTR and CVR.',
+  feeds:'Compare it with the profit you make per sale. If CPA is higher, you lose money on every order.'},
+ {k:'AOV', sub:'average order value', layer:'pink', side:true, name:'Average order value', simple:'Average basket size.',
+  formula:'Revenue ÷ Orders', moves:'Bundles, upsells, free-shipping thresholds, and which products the ad promotes.',
+  feeds:'A side input. It doesn’t change what customers cost, but bigger baskets raise ROAS without extra ad spend.'},
+ {k:'ROAS', sub:'return on ad spend', layer:'pink', name:'Return on ad spend', simple:'Dollars back for each dollar spent.',
+  formula:'Revenue ÷ Spend, or AOV ÷ CPA', moves:'CPA on one side and AOV on the other.',
+  feeds:'The scoreboard. $1,000 in and $4,000 out is a 4.0x ROAS. Judge it against your break-even ROAS, which is 1 ÷ margin.'}
+];
+const layerColor = {blue:'var(--blue)', ok:'var(--ok)', pink:'var(--pink)'};
+const chainEl = $('.chain');
+stages.forEach((s,i) => {
+  const b = document.createElement('button');
+  b.className = 'pill' + (s.side ? ' side' : '');
+  b.style.borderColor = layerColor[s.layer];
+  b.setAttribute('aria-pressed','false');
+  b.innerHTML = `<b>${s.k}</b><span>${s.sub}</span>`;
+  b.addEventListener('click', () => showStage(i));
+  chainEl.appendChild(b);
+  if (i < stages.length-1){ const a = document.createElement('span'); a.className='arrow' + (reduce?'':' flow'); a.setAttribute('aria-hidden','true'); chainEl.appendChild(a); }
+});
+function showStage(i){
+  const s = stages[i];
+  $$('.pill').forEach((p,j) => p.setAttribute('aria-pressed', j===i ? 'true':'false'));
+  const ex = $('#explain');
+  ex.innerHTML = `<div class="fade-in"><h3>${s.k}</h3><p style="color:var(--muted)">${s.name}</p><p class="big">${s.simple}</p><span class="formula">${s.formula}</span></div>
+  <dl class="fade-in"><div><dt>What pushes it up or down</dt><dd>${s.moves}</dd></div><div><dt>What it does to the rest of the chain</dt><dd>${s.feeds}</dd></div></dl>`;
+}
+showStage(0);
+
+/* ---------- Flashcards ---------- */
+const groups = [
+ {t:'Delivery and traffic', d:'Top of the funnel: are people seeing and clicking?', cards:[
+   ['CPM','What does it cost to be seen?','The price of ad space.','Spend ÷ Impressions × 1,000','$300 for 20,000 views = $15 CPM'],
+   ['CTR','Is the ad grabbing attention?','How strong your hook is.','Clicks ÷ Impressions × 100','300 clicks from 20,000 views = 1.5%'],
+   ['CPC','What does one visitor cost?','The cost to get one person to your site.','Spend ÷ Clicks','$300 ÷ 300 clicks = $1.00']]},
+ {t:'Efficiency and conversion', d:'Bottom of the funnel: are visitors buying?', cards:[
+   ['CVR','Is the page doing its job?','On-site selling power.','Conversions ÷ Clicks × 100','9 orders from 300 clicks = 3%'],
+   ['CPA','What does one customer cost?','The price tag on one sale or lead. Also called CAC.','Spend ÷ Conversions','$300 ÷ 9 orders = $33.33'],
+   ['AOV','How much does each order bring in?','Average basket size.','Revenue ÷ Orders','$810 ÷ 9 orders = $90']]},
+ {t:'Financial return', d:'The bottom line: did the money come back?', cards:[
+   ['ROAS','Did this campaign pay off?','Revenue from ads for each ad dollar.','Ad revenue ÷ Ad spend','$1,000 → $4,000 in sales = 4.0x'],
+   ['MER','Is the whole account healthy?','Blended ROAS across every channel. It catches sales that tracking misses.','Total revenue ÷ Total marketing spend','$60k revenue ÷ $15k all spend = 4.0x'],
+   ['BE ROAS','What ROAS do I need to not lose money?','Break-even ROAS. Below it, ads cost more than they earn.','1 ÷ Gross margin','50% margin → 2.0x to break even']]}
+];
+const cg = $('#cardGroups');
+groups.forEach(g => {
+  const h = document.createElement('div'); h.className='group-title'; h.innerHTML = `${g.t} <small>${g.d}</small>`; cg.appendChild(h);
+  const wrap = document.createElement('div'); wrap.className='cards';
+  g.cards.forEach(c => {
+    const b = document.createElement('button'); b.className='card'; b.setAttribute('aria-label', `${c[0]} flashcard. ${c[1]} Tap to flip.`);
+    b.innerHTML = `<div class="card-inner"><div class="face front"><b>${c[0]}</b><p class="q">${c[1]}</p><p class="hint">Tap to flip</p></div>
+      <div class="face back"><strong>${c[2]}</strong><code>${c[3]}</code><p class="ex">Example: ${c[4]}</p></div></div>`;
+    b.addEventListener('click', () => b.classList.toggle('flipped'));
+    wrap.appendChild(b);
+  });
+  cg.appendChild(wrap);
+});
+
+/* ---------- 2. Simulator ---------- */
+const S = {budget:$('#s-budget'), cpm:$('#s-cpm'), ctr:$('#s-ctr'), cvr:$('#s-cvr'), aov:$('#s-aov'), margin:$('#s-margin')};
+const presets = {
+  base:{budget:5000,cpm:15,ctr:1.5,cvr:3,aov:90,margin:50},
+  winner:{budget:5000,cpm:12,ctr:2.8,cvr:4.5,aov:95,margin:60},
+  leak:{budget:5000,cpm:110,ctr:3.5,cvr:0.6,aov:70,margin:55},
+  fatigue:{budget:5000,cpm:20,ctr:0.5,cvr:2.5,aov:75,margin:50},
+  aov:{budget:5000,cpm:10,ctr:2,cvr:4,aov:20,margin:40}
+};
+let M = {};
+function calc(v){
+  const imps = v.budget / v.cpm * 1000;
+  const clicks = imps * v.ctr/100;
+  const conv = clicks * v.cvr/100;
+  const rev = conv * v.aov;
+  const m = v.margin/100;
+  return {...v, imps, clicks, conv, rev, m,
+    cpc: v.budget/clicks, cpa: v.budget/conv, roas: rev/v.budget,
+    be: 1/m, unit: v.aov*m, profit: rev*m - v.budget};
+}
+function read(){ const v={}; for (const k in S) v[k] = parseFloat(S[k].value); return v; }
+
+const tierName = {poor:'Poor', ok:'Satisfactory', great:'Excellent'};
+const gaugeDefs = [
+  {k:'ctr', name:'CTR', sub:'ad resonance', min:0, max:5, zones:[[0,0.8,'poor'],[0.8,3,'ok'],[3,5,'great']], val:m=>m.ctr, fmt:v=>v.toFixed(1)+'%'},
+  {k:'cpc', name:'CPC', sub:'traffic cost', min:0, max:4, zones:[[0,1,'great'],[1,2.5,'ok'],[2.5,4,'poor']], val:m=>m.cpc, fmt:v=>money(v)},
+  {k:'cvr', name:'CVR', sub:'landing page', min:0, max:6, zones:[[0,1,'poor'],[1,4,'ok'],[4,6,'great']], val:m=>m.cvr, fmt:v=>v.toFixed(1)+'%'},
+  {k:'cpa', name:'CPA', sub:'vs profit per sale', min:0, max:2, zones:[[0,0.5,'great'],[0.5,1,'ok'],[1,2,'poor']], val:m=>m.cpa/m.unit, fmt:(v,m)=>money(m.cpa)},
+  {k:'roas', name:'ROAS', sub:'return on spend', min:0, max:7, zones:[[0,2,'poor'],[2,4.5,'ok'],[4.5,7,'great']], val:m=>m.roas, fmt:v=>v.toFixed(2)+'x', be:true}
+];
+const gaugesEl = $('#gauges');
+gaugeDefs.forEach(g => {
+  const row = document.createElement('div'); row.className='gauge';
+  const span = g.max - g.min;
+  row.innerHTML = `<div class="name">${g.name}<small>${g.sub}</small></div>
+    <div class="track">${g.zones.map(z=>`<div class="zone z-${z[2]}" style="width:${(z[1]-z[0])/span*100}%"></div>`).join('')}
+    ${g.be?'<div class="be" id="be-line"></div>':''}<div class="marker" id="mk-${g.k}"></div></div>
+    <div class="badge" id="bd-${g.k}"></div>`;
+  gaugesEl.appendChild(row);
+});
+function tierOf(g, v){ for (const z of g.zones){ if (v >= z[0] && v < z[1]) return z[2]; } return v < g.zones[0][0] ? g.zones[0][2] : g.zones[g.zones.length-1][2]; }
+
+function diagnose(m, t){
+  const out = [];
+  if (m.roas < m.be) out.push(['bad', `<b>Losing money.</b> Each $1 brings back ${money(m.roas)} in sales, but at a ${Math.round(m.margin)}% margin you need ${m.be.toFixed(2)}x just to break even.`]);
+  if (t.ctr === 'poor') out.push(['bad', `<b>Weak hook.</b> Few people click, so the platform charges more per click. Test new creative angles and tighten targeting.`]);
+  if (t.ctr !== 'poor' && t.cvr === 'poor') out.push(['bad', `<b>Traffic leak.</b> The ad gets clicks but the page doesn’t close. Check that the page delivers what the ad promised and that checkout is easy.`]);
+  if (t.cpc === 'poor' && t.ctr !== 'poor') out.push(['bad', `<b>Expensive audience.</b> Clicks cost a lot even with a decent CTR, which points to a high CPM. Try broader or less contested audiences.`]);
+  if (t.cpa !== 'poor' && m.roas < 2.5 && m.aov < 40) out.push(['bad', `<b>Basket too small.</b> Customers are cheap to get but spend little. Add bundles, upsells or a free-shipping threshold.`]);
+  if (m.roas >= 4.5 && m.roas >= m.be) out.push(['good', `<b>Ready to scale.</b> Strong profit on every sale. Raise budget gradually and watch that CPA holds.`]);
+  else if (!out.length) out.push(['', `<b>Healthy baseline.</b> The campaign covers its costs and makes a profit. Look for the weakest gauge above and improve that one first.`]);
+  return out.slice(0,3);
+}
+
+const levers = [
+  {k:'ctr', t:'+20% CTR', d:'Better creative', f:v=>({...v, ctr:v.ctr*1.2})},
+  {k:'cvr', t:'+20% CVR', d:'Better landing page', f:v=>({...v, cvr:v.cvr*1.2})},
+  {k:'aov', t:'+20% AOV', d:'Bundles and upsells', f:v=>({...v, aov:v.aov*1.2})},
+  {k:'cpm', t:'−20% CPM', d:'Cheaper audience', f:v=>({...v, cpm:v.cpm*0.8})}
+];
+let activeLever = null;
+const leversEl = $('#levers');
+levers.forEach((l,i) => {
+  const b = document.createElement('button'); b.className='lever'; b.innerHTML = `<b>${l.t}</b><span>${l.d}</span>`;
+  b.addEventListener('click', () => { activeLever = activeLever === i ? null : i; renderLever(); });
+  leversEl.appendChild(b);
+});
+function renderLever(){
+  $$('.lever').forEach((b,i) => b.classList.toggle('on', i===activeLever));
+  if (activeLever === null){ $('#leverOut').textContent = 'Tap a lever to see what a 20% improvement does to ROAS.'; return; }
+  const l = levers[activeLever]; const n = calc(l.f(read()));
+  const pct = (n.roas/M.roas - 1)*100;
+  $('#leverOut').innerHTML = `ROAS goes from <b>${M.roas.toFixed(2)}x</b> to <b>${n.roas.toFixed(2)}x</b> (+${pct.toFixed(0)}%), and profit from <b>${money(M.profit)}</b> to <b>${money(n.profit)}</b>. ` +
+    (activeLever===3 ? 'Cutting cost by 20% lifts return by 25%, because CPM sits underneath everything.' : 'CTR, CVR and AOV multiply together, so a 20% gain in any one of them lifts ROAS by the same 20%.');
+}
+
+function update(){
+  const v = read(); M = calc(v);
+  $('#o-budget').textContent = money(v.budget);
+  $('#o-cpm').textContent = money(v.cpm);
+  $('#o-ctr').textContent = v.ctr.toFixed(1)+'%';
+  $('#o-cvr').textContent = v.cvr.toFixed(1)+'%';
+  $('#o-aov').textContent = '$'+v.aov;
+  $('#o-margin').textContent = v.margin+'%';
+  $('#kpis').innerHTML = [
+    ['Impressions', num(M.imps)], ['Clicks', num(M.clicks)], ['CPC', money(M.cpc)], ['Sales', num(M.conv)],
+    ['CPA', money(M.cpa)], ['Revenue', money(M.rev)], ['ROAS', M.roas.toFixed(2)+'x', true], ['Profit after ads', money(M.profit), true]
+  ].map(k => `<div class="kpi${k[2]?' hero-kpi':''}"><span>${k[0]}</span><b>${k[1]}</b></div>`).join('');
+  $('#equation').innerHTML = `<b>ROAS = AOV × CVR × CTR × 1,000 ÷ CPM</b><br>${money(v.aov)} × ${v.cvr.toFixed(1)}% × ${v.ctr.toFixed(1)}% × 1,000 ÷ ${money(v.cpm)} = <b>${M.roas.toFixed(2)}x</b>. Break-even at your margin: <b>${M.be.toFixed(2)}x</b>.`;
+  const tiers = {};
+  gaugeDefs.forEach(g => {
+    const val = g.val(M); const t = tierOf(g, val); tiers[g.k] = t;
+    const pos = clamp((val - g.min)/(g.max-g.min), 0, 1)*100;
+    $('#mk-'+g.k).style.left = pos+'%';
+    const bd = $('#bd-'+g.k); bd.className = 'badge b-'+t; bd.textContent = g.fmt(val, M);
+    bd.title = tierName[t];
+    if (g.be) $('#be-line').style.left = clamp(M.be/g.max,0,1)*100+'%';
+  });
+  $('#diag').innerHTML = diagnose(M, tiers).map(d => `<div class="${d[0]}">${d[1]}</div>`).join('');
+  renderLever();
+  flowRates();
+}
+Object.values(S).forEach(el => el.addEventListener('input', update));
+function loadPreset(name, scroll){
+  const p = presets[name]; for (const k in p) S[k].value = p[k]; update();
+  if (scroll) $('#sim').scrollIntoView({behavior: reduce?'auto':'smooth'});
+}
+$$('[data-preset]').forEach(b => b.addEventListener('click', () => loadPreset(b.dataset.preset)));
+
+/* animated flow canvas */
+const cv = $('#flow'), ctx = cv.getContext('2d');
+let W=0, H=220, parts=[], pClick=.2, pConv=.3, spawn=1, acc=0, running=false, coins=0, colors={};
+function size(){ const r = cv.getBoundingClientRect(); const d = window.devicePixelRatio||1; W = r.width; H = r.height; cv.width = W*d; cv.height = H*d; ctx.setTransform(d,0,0,d,0,0); }
+function readColors(){ colors = {ink:css('--ink'), muted:css('--muted'), blue:css('--blue'), pink:css('--pink'), poor:css('--poor'), line:css('--line'), ok:css('--ok')}; }
+function flowRates(){ pClick = clamp(M.ctr*0.12, .03, .9); pConv = clamp(M.cvr*0.09, .03, .9); spawn = clamp(1000/M.cpm*0.04, .4, 4); }
+function gateX(i){ return W*(i===1?0.36:0.68); }
+function newPart(){
+  const click = Math.random() < pClick, conv = click && Math.random() < pConv;
+  parts.push({x:-6, y:30+Math.random()*(H-80), vx:1.6+Math.random()*1.2, vy:0, click, conv, fall:false, a:1, stage:0});
+}
+function drawStatic(){
+  ctx.clearRect(0,0,W,H);
+  ctx.font = '600 13px "Atkinson Hyperlegible", system-ui'; ctx.textBaseline='top';
+  const labels = [['Seen', 12, colors.blue], ['Clicked', gateX(1)+10, colors.ok], ['Bought', gateX(2)+10, colors.pink]];
+  labels.forEach(l => { ctx.fillStyle = l[2]; ctx.fillText(l[0], l[1], 10); });
+  [1,2].forEach(i => { ctx.strokeStyle = colors.line; ctx.lineWidth = 2; ctx.setLineDash([5,5]); ctx.beginPath(); ctx.moveTo(gateX(i), 30); ctx.lineTo(gateX(i), H-30); ctx.stroke(); ctx.setLineDash([]); });
+  ctx.fillStyle = colors.muted; ctx.textBaseline='bottom';
+  ctx.fillText(`${M.ctr.toFixed(1)}% click`, gateX(1)-70, H-8);
+  ctx.fillText(`${M.cvr.toFixed(1)}% buy`, gateX(2)-62, H-8);
+  ctx.fillStyle = colors.pink; ctx.fillText(`${num(M.conv)} sales, ${money(M.rev)}`, W-170 > gateX(2)+10 ? W-170 : gateX(2)+10, H-24);
+}
+function frame(){
+  if (!running) return;
+  acc += spawn; while (acc >= 1){ newPart(); acc -= 1; }
+  drawStatic();
+  for (const p of parts){
+    if (!p.fall){
+      p.x += p.vx * (p.stage===2 ? 1.4 : 1);
+      if (p.stage===0 && p.x >= gateX(1)){ if (p.click) p.stage=1; else p.fall=true; }
+      if (p.stage===1 && p.x >= gateX(2)){ if (p.conv) p.stage=2; else p.fall=true; }
+    } else { p.vy += .25; p.y += p.vy; p.x += p.vx*.3; p.a -= .03; }
+    ctx.globalAlpha = Math.max(p.a,0);
+    if (p.stage===2){ ctx.fillStyle = colors.pink; ctx.beginPath(); ctx.arc(p.x,p.y,7,0,Math.PI*2); ctx.fill(); ctx.fillStyle='#fff'; ctx.font='700 10px system-ui'; ctx.textBaseline='middle'; ctx.textAlign='center'; ctx.fillText('$',p.x,p.y+.5); ctx.textAlign='left'; }
+    else { ctx.fillStyle = p.fall ? colors.poor : (p.stage===1 ? colors.ok : colors.blue); ctx.beginPath(); ctx.arc(p.x,p.y,p.stage===1?4:3,0,Math.PI*2); ctx.fill(); }
+    ctx.globalAlpha = 1;
+  }
+  parts = parts.filter(p => p.a > 0 && p.x < W+10 && p.y < H+10);
+  requestAnimationFrame(frame);
+}
+function drawReduced(){ drawStatic(); }
+window.__redraw = () => { readColors(); if (reduce || !running) drawReduced(); };
+size(); readColors();
+loadPreset('base');
+if (reduce){ drawReduced(); }
+else {
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting && !running){ running = true; requestAnimationFrame(frame); } else if (!e.isIntersecting){ running = false; } }));
+  io.observe(cv);
+}
+window.addEventListener('resize', () => { size(); if (reduce) drawReduced(); });
+
+/* ---------- 3. Diagnose ---------- */
+const patterns = [
+ {t:'Traffic leak', sigs:[['CTR high','up'],['CPC high','up bad'],['CVR low','down']], p:'The ad is exciting, maybe a little clickbaity, but the page doesn’t deliver on the promise or the checkout is confusing.', fix:'Fix: match the page headline and offer to the ad, cut checkout steps, speed up the page.', preset:'leak'},
+ {t:'Creative fatigue or poor targeting', sigs:[['CTR low','down'],['CPC high','up bad'],['CPA high','up bad']], p:'The audience isn’t interested in the hook. The platform charges more per click when nobody engages.', fix:'Fix: rotate in fresh creative, test new angles, revisit who you’re targeting.', preset:'fatigue'},
+ {t:'AOV problem', sigs:[['CPA low','up'],['ROAS low','down']], p:'Customers are cheap to win, but they buy your cheapest or lowest-margin items.', fix:'Fix: promote higher-value products, add bundles, upsells and free-shipping thresholds.', preset:'aov'},
+ {t:'The winner', sigs:[['CTR high','up'],['CVR high','up'],['ROAS 4.5x+','up']], p:'Strong hook, smooth page, healthy basket. Every link in the chain is pulling its weight.', fix:'Next: scale budget in steps, keep testing new creative before this one fatigues.', preset:'winner'}
+];
+$('#patterns').innerHTML = patterns.map(p => `<article class="pattern"><h3>${p.t}</h3>
+  <div class="signals">${p.sigs.map(s=>`<span class="sig ${s[1]}">${s[1].startsWith('up')?'▲':'▼'} ${s[0]}</span>`).join('')}</div>
+  <p>${p.p}</p><p class="fix">${p.fix}</p><button class="load" data-load="${p.preset}">Load into simulator</button></article>`).join('');
+$$('[data-load]').forEach(b => b.addEventListener('click', () => loadPreset(b.dataset.load, true)));
+
+/* ---------- 4. Fit check + industries ---------- */
+const fitQs = [
+ 'Can a customer buy online in a few clicks?',
+ 'Does one person decide in days, not a committee over months?',
+ 'Can you trace a sale back to the ad that caused it?',
+ 'Are there thousands of potential buyers, not a few hundred accounts?'
+];
+const fitAns = [true,true,true,true];
+$('#fitQs').innerHTML = fitQs.map((q,i) => `<div class="q-row"><span>${q}</span><div class="yn" role="group" aria-label="${q}"><button data-q="${i}" data-v="1" aria-pressed="true">Yes</button><button data-q="${i}" data-v="0" aria-pressed="false">No</button></div></div>`).join('');
+$$('[data-q]').forEach(b => b.addEventListener('click', () => {
+  const i = +b.dataset.q; fitAns[i] = b.dataset.v === '1';
+  $$(`[data-q="${i}"]`).forEach(x => x.setAttribute('aria-pressed', (x.dataset.v==='1') === fitAns[i] ? 'true':'false'));
+  renderFit();
+}));
+function renderFit(){
+  const s = fitAns.filter(Boolean).length;
+  const col = s>=4 ? 'var(--great)' : s>=2 ? 'var(--ok)' : 'var(--poor)';
+  const v = s>=4 ? ['Paid ads can be your main engine', 'You look like DTC or e-commerce. Paid social and search can drive most of your growth, often 40–60% of the marketing budget.']
+    : s>=2 ? ['Paid ads work, with a plan', 'Lean on high-intent search and retargeting. Pair top-of-funnel social with nurturing, since buyers take longer to decide. Think 15–35% of budget.']
+    : ['Paid ads support, they don’t lead', 'Relationships, referrals, events and account-based marketing do the heavy lifting. Keep paid to 5–20% and aim it narrowly.'];
+  $('#verdict').innerHTML = `<div class="meter">${[0,1,2,3].map(i=>`<i style="background:${i<s?col:''}"></i>`).join('')}</div><b>${v[0]}</b>${v[1]}`;
+}
+renderFit();
+
+const industries = [
+ {n:'DTC / e-commerce', s:'high', fit:5, lo:45, hi:60, r:'Impulse buys, instant online checkout, clear tracking, and heavy use of visual platforms like Meta, TikTok and Google Shopping.'},
+ {n:'Local services', s:'high', fit:4, lo:35, hi:50, r:'Plumbing, HVAC, legal, med spas. Urgent local searches like “emergency plumber near me” turn straight into calls and booked jobs.'},
+ {n:'B2B SaaS & tech', s:'mod', sl:'Moderate / High', fit:3, lo:15, hi:25, r:'Great for catching high-intent Google searches. Social ads at the top of the funnel need careful nurturing because buyers take a long time to decide.'},
+ {n:'CPG', s:'mod', fit:3, lo:30, hi:50, alt:[10,20], r:'Good for driving direct-to-consumer trials or boosting retail sales through Amazon or Instacart ads. Margins are tight.'},
+ {n:'Healthcare / pharma', s:'mod', fit:2, lo:15, hi:30, r:'Platform rules on medical claims are strict, but compliant local campaigns bring in patients well.'},
+ {n:'B2B professional services', s:'low', sl:'Low / Moderate', fit:1, lo:10, hi:20, r:'Consulting and agencies run on reputation and referrals. LinkedIn ads can generate leads, but closing takes a long time and depends on relationships.'},
+ {n:'Enterprise / heavy manufacturing', s:'low', fit:0, lo:5, hi:15, r:'The audience may be a few hundred decision-makers worldwide. Mass ads waste money; account-based marketing and trade shows win.'}
+];
+const MAXP = 70;
+$('#axisTicks').innerHTML = [0,10,20,30,40,50,60,70].map(t => `<span style="left:${t/MAXP*100}%">${t}%</span>`).join('');
+let sortBy = 'fit', cpgRetail = false;
+function renderRows(animate){
+  const list = [...industries].sort((a,b) => sortBy==='fit' ? b.fit-a.fit : (b.lo+b.hi)-(a.lo+a.hi));
+  const sl = {high:'High', mod:'Moderate', low:'Low'};
+  $('#rows').innerHTML = list.map(d => {
+    const lo = d.alt && cpgRetail ? d.alt[0] : d.lo, hi = d.alt && cpgRetail ? d.alt[1] : d.hi;
+    const extra = d.alt ? `<br><span class="seg" style="margin-top:4px" onclick="event.stopPropagation()"><button data-cpg="0" aria-pressed="${!cpgRetail}" style="padding:2px 8px;font-size:12px">DTC</button><button data-cpg="1" aria-pressed="${cpgRetail}" style="padding:2px 8px;font-size:12px">Retail</button></span>` : '';
+    return `<div class="row" role="button" tabindex="0" aria-expanded="false"><div class="lbl">${d.n}<br><small class="s-${d.s}">${d.sl||sl[d.s]} fit</small>${extra}</div>
+      <div class="bar-track"><div class="avg-band" style="left:${30/MAXP*100}%;width:${5/MAXP*100}%"></div>
+      <div class="range" data-w="${(hi-lo)/MAXP*100}" style="left:${lo/MAXP*100}%;width:${animate?0:(hi-lo)/MAXP*100}%"><em>${lo}–${hi}%</em></div></div>
+      <p class="reason">${d.r}</p></div>`;
+  }).join('');
+  $$('#rows .row').forEach(r => {
+    const tog = () => { r.classList.toggle('open'); r.setAttribute('aria-expanded', r.classList.contains('open')); };
+    r.addEventListener('click', tog);
+    r.addEventListener('keydown', e => { if (e.key==='Enter'||e.key===' '){ e.preventDefault(); tog(); } });
+  });
+  $$('[data-cpg]').forEach(b => b.addEventListener('click', e => { e.stopPropagation(); cpgRetail = b.dataset.cpg==='1'; renderRows(false); }));
+  if (animate) requestAnimationFrame(() => requestAnimationFrame(() => $$('#rows .range').forEach((el,i) => { el.style.transitionDelay = (i*70)+'ms'; el.style.width = el.dataset.w+'%'; })));
+}
+let chartShown = false;
+renderRows(false);
+if (!reduce){
+  $$('#rows .range').forEach(el => el.style.width = 0);
+  new IntersectionObserver((es,o) => es.forEach(e => { if (e.isIntersecting && !chartShown){ chartShown = true; renderRows(true); o.disconnect(); } }), {threshold:.3}).observe($('#rows'));
+}
+$$('[data-sort]').forEach(b => b.addEventListener('click', () => { sortBy = b.dataset.sort; $$('[data-sort]').forEach(x => x.setAttribute('aria-pressed', x===b)); renderRows(false); }));
+
+/* ---------- 5. Budget mix ---------- */
+const btypes = [
+ ['All industries (average)',30,35,'Most budgets split the rest across content, SEO, email, events and brand.'],
+ ['DTC / e-commerce',45,60,'The rest typically funds email and SMS, content, creators and retention.'],
+ ['Local services',35,50,'The rest goes to reviews, local SEO, referrals and community presence.'],
+ ['B2B SaaS & tech',15,25,'The rest goes to content, SEO, events and trade shows, product marketing and sales enablement.'],
+ ['CPG (DTC-led)',30,50,'The rest supports retail partners, trade promotion, content and brand.'],
+ ['CPG (retail-reliant)',10,20,'Most of the rest funds retail placement, trade promotion and in-store support.'],
+ ['Healthcare / pharma',15,30,'The rest goes to compliant content, referral relationships, SEO and community outreach.'],
+ ['B2B professional services',10,20,'Most of the rest funds thought leadership, events, referrals and relationship building.'],
+ ['Enterprise / heavy manufacturing',5,15,'The rest goes to account-based marketing, trade shows and sales support.']
+];
+$('#b-type').innerHTML = btypes.map((b,i) => `<option value="${i}" ${i===1?'selected':''}>${b[0]}</option>`).join('');
+const mix = [
+ {p:70, c:'--blue', t:'Proven', d:'Channels that reliably produce results, like Google Search and your core Meta or TikTok prospecting campaigns.'},
+ {p:20, c:'--ok', t:'Scaling', d:'Emerging channels that are starting to work, plus retargeting loops that bring visitors back.'},
+ {p:10, c:'--pink', t:'Experiments', d:'High-risk, high-reward bets: new ad networks, new formats, AI creative tests. Expect some to fail.'}
+];
+let mixSel = 0;
+function renderBudget(){
+  const total = +$('#b-total').value; $('#o-total').textContent = money(total);
+  const b = btypes[+$('#b-type').value];
+  const lo = total*b[1]/100, hi = total*b[2]/100, mid = (lo+hi)/2;
+  $('#splitOut').innerHTML = `<div class="kpi"><span>Paid share</span><b>${b[1]}–${b[2]}%</b></div><div class="kpi hero-kpi"><span>Paid budget (mid)</span><b>${money(mid)}</b></div><div class="kpi"><span>Range</span><b style="font-size:17px">${money(lo)}–${money(hi)}</b></div>`;
+  $('#restNote').textContent = b[3];
+  const r = 70, C = 2*Math.PI*r; let off = 0;
+  $('#donut').innerHTML = `<circle cx="100" cy="100" r="${r}" style="stroke:var(--surface-2)"></circle>` + mix.map((m,i) => {
+    const len = C*m.p/100; const s = `<circle data-mix="${i}" class="${i===mixSel?'hl':''}" cx="100" cy="100" r="${r}" style="stroke:var(${m.c})" stroke-dasharray="${len-2} ${C-len+2}" stroke-dashoffset="${-off}" transform="rotate(-90 100 100)"></circle>`;
+    off += len; return s; }).join('');
+  const m = mix[mixSel];
+  $('#donutInfo').innerHTML = `<b>${money(mid*m.p/100)}</b>${m.p}% for ${m.t.toLowerCase()} channels.<br><span style="color:var(--muted)">${m.d}</span>`;
+  $('#mixList').innerHTML = mix.map((x,i) => `<button data-mix="${i}" class="${i===mixSel?'on':''}"><i style="background:var(${x.c})"></i><strong>${x.p}%</strong><span>${x.t}</span><span>${money(mid*x.p/100)}</span></button>`).join('');
+  $$('[data-mix]').forEach(el => el.addEventListener('click', () => { mixSel = +el.dataset.mix; renderBudget(); }));
+}
+$('#b-total').addEventListener('input', renderBudget);
+$('#b-type').addEventListener('change', renderBudget);
+renderBudget();
+
+/* ---------- 6. Quiz ---------- */
+const Q = [
+ ['Your CTR is 3.2% but CVR is 0.5%. Where’s the problem?', ['The ad creative','The landing page or checkout','The audience is too small','Your CPM is too low'], 1, 'People are clicking, so the ad works. They leave once they land. That’s a traffic leak.'],
+ ['You spend $2,000 and the ads bring in $7,000. What’s your ROAS?', ['2.5x','3.5x','5.0x','0.29x'], 1, '$7,000 ÷ $2,000 = 3.5x.'],
+ ['Your gross margin is 40%. What ROAS do you need to break even?', ['1.4x','2.0x','2.5x','4.0x'], 2, 'Break-even ROAS = 1 ÷ margin = 1 ÷ 0.40 = 2.5x.'],
+ ['CPM is $20 and CTR is 2%. What’s the CPC?', ['$0.40','$1.00','$2.00','$10.00'], 1, 'CPC = CPM ÷ (1,000 × CTR) = $20 ÷ 20 clicks = $1.00.'],
+ ['Customers are cheap to win, but ROAS is low. What’s most likely?', ['Creative fatigue','A traffic leak','Small baskets (AOV problem)','CPM too high'], 2, 'Low CPA with low ROAS means each sale is small. Raise AOV with bundles and upsells.'],
+ ['Which business model suits paid social best?', ['Enterprise manufacturing','B2B consulting','DTC e-commerce','Commercial real estate'], 2, 'Fast checkout, clear tracking and short feedback loops. DTC often spends 45–60% of its marketing budget on paid.'],
+ ['How is MER different from ROAS?', ['It only counts Meta','It divides total revenue by total marketing spend','It ignores revenue','It measures clicks'], 1, 'MER is blended. It covers every channel and catches sales that ad tracking misses.']
+];
+let qi = 0, score = 0, answered = false;
+function renderQ(){
+  const c = $('#qcard');
+  if (qi >= Q.length){
+    const msg = score===Q.length ? 'Perfect score. You can read an ad report.' : score>=5 ? 'Solid. Revisit the simulator for the ones you missed.' : 'Good start. Flip through the flashcards and try again.';
+    c.innerHTML = `<div class="qprog">${Q.map(()=>'<i class="done"></i>').join('')}</div><h3>${score} / ${Q.length} correct</h3><p>${msg}</p><button class="next" id="again">Take the quiz again</button>`;
+    $('#again').addEventListener('click', () => { qi=0; score=0; renderQ(); }); return;
+  }
+  const q = Q[qi]; answered = false;
+  c.innerHTML = `<div class="qprog">${Q.map((_,i)=>`<i class="${i<qi?'done':''}"></i>`).join('')}</div><h3 class="fade-in">${q[0]}</h3>
+    <div class="opts">${q[1].map((o,i)=>`<button class="opt" data-o="${i}">${o}</button>`).join('')}</div><p class="qfeed" aria-live="polite"></p>`;
+  $$('.opt').forEach(b => b.addEventListener('click', () => {
+    if (answered) return; answered = true;
+    const i = +b.dataset.o, ok = i === q[2]; if (ok) score++;
+    $$('.opt').forEach((x,j) => { x.disabled = true; if (j===q[2]) x.classList.add('right'); else if (j===i) x.classList.add('wrong'); });
+    c.querySelector('.qfeed').innerHTML = `<b>${ok?'Correct.':'Not quite.'}</b> ${q[3]}`;
+    const n = document.createElement('button'); n.className='next'; n.textContent = qi===Q.length-1 ? 'See my score' : 'Next question';
+    n.addEventListener('click', () => { qi++; renderQ(); }); c.appendChild(n); n.focus();
+  }));
+}
+renderQ();
+
+/* nav highlight */
+const navIO = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting){ $$('.nav-links a').forEach(a => a.classList.toggle('active', a.getAttribute('href')==='#'+e.target.id)); } }), {rootMargin:'-40% 0px -55% 0px'});
+['chain','cards','sim','diagnose','fit','budget','quiz'].forEach(id => navIO.observe(document.getElementById(id)));
+})();
+</script>
+</body>
+</html>
